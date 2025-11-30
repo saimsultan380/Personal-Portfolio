@@ -7,6 +7,8 @@ import { motion } from "framer-motion";
 import { ExternalLink, Github } from "lucide-react";
 import Link from "next/link";
 
+import Image from "next/image";
+
 const projects = [
     {
         title: "Thriveclix",
@@ -70,11 +72,14 @@ export function Projects() {
                             <Card className="group relative overflow-hidden border-border/50 hover:border-primary/50 transition-all duration-300 h-full flex flex-col">
                                 {/* Auto-Generated Screenshot Container */}
                                 <div className="relative w-full h-48 overflow-hidden bg-muted/50 border-b border-border/50">
-                                    <img
+                                    <Image
                                         src={getScreenshotUrl(project.liveUrl)}
-                                        alt={project.title}
-                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                        loading="lazy"
+                                        alt={`${project.title} screenshot`}
+                                        fill
+                                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                        loading={index === 0 ? "eager" : "lazy"}
+                                        priority={index === 0}
+                                        unoptimized
                                     />
                                     <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300" />
                                 </div>

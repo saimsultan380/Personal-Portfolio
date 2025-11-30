@@ -1,12 +1,31 @@
+export const runtime = 'edge';
+
+import dynamic from 'next/dynamic';
 import { Hero } from "@/components/hero";
 import { About } from "@/components/about";
-import { Experience } from "@/components/experience";
-import { Education } from "@/components/education";
-import { Skills } from "@/components/skills";
-import { Services } from "@/components/services";
-import { Projects } from "@/components/projects";
-import { Testimonials } from "@/components/testimonials";
-import { Contact } from "@/components/contact";
+
+// Lazy load below-fold components
+const Services = dynamic(() => import("@/components/services").then(mod => ({ default: mod.Services })), {
+  loading: () => <div className="w-full py-24" />
+});
+const Skills = dynamic(() => import("@/components/skills").then(mod => ({ default: mod.Skills })), {
+  loading: () => <div className="w-full py-24" />
+});
+const Experience = dynamic(() => import("@/components/experience").then(mod => ({ default: mod.Experience })), {
+  loading: () => <div className="w-full py-24" />
+});
+const Education = dynamic(() => import("@/components/education").then(mod => ({ default: mod.Education })), {
+  loading: () => <div className="w-full py-24" />
+});
+const Projects = dynamic(() => import("@/components/projects").then(mod => ({ default: mod.Projects })), {
+  loading: () => <div className="w-full py-24" />
+});
+const Testimonials = dynamic(() => import("@/components/testimonials").then(mod => ({ default: mod.Testimonials })), {
+  loading: () => <div className="w-full py-24" />
+});
+const Contact = dynamic(() => import("@/components/contact").then(mod => ({ default: mod.Contact })), {
+  loading: () => <div className="w-full py-24" />
+});
 
 export default function Home() {
   return (

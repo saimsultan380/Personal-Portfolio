@@ -32,7 +32,7 @@ export function Hero() {
                 </div>
 
                 <div className="absolute inset-0">
-                    {[...Array(30)].map((_, i) => (
+                    {[...Array(10)].map((_, i) => (
                         <motion.div
                             key={i}
                             className="absolute w-1 h-1 bg-primary/30 rounded-full"

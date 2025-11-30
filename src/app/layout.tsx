@@ -11,11 +11,15 @@ import { Analytics } from "@vercel/analytics/next";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: 'swap',
+  preload: true,
 });
 
 const sora = Sora({
   subsets: ["latin"],
   variable: "--font-sora",
+  display: 'swap',
+  preload: true,
 });
 
 export const metadata: Metadata = {
@@ -129,6 +133,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <head>
+        <link rel="preconnect" href="https://api.microlink.io" />
+        <link rel="dns-prefetch" href="https://api.microlink.io" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
