@@ -1,109 +1,232 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Briefcase, Calendar } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { ArrowUpRight, Calendar, MapPin } from "lucide-react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { cn } from "@/lib/utils";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const experiences = [
-    {
-        title: "Senior Full-Stack Developer",
-        company: "TS Media",
-        period: "2022 - Present",
-        description: "Leading development of enterprise-scale web applications using Next.js, React, and Node.js. Mentoring junior developers and implementing best practices.",
-        achievements: [
-            "Reduced page load time by 40% through optimization",
-            "Led team of 5 developers on major product launch",
-            "Implemented CI/CD pipeline reducing deployment time by 60%",
-        ],
-    },
-    {
-        title: "Full-Stack Developer",
-        company: "Digital Solutions Co.",
-        period: "2020 - 2022",
-        description: "Developed and maintained multiple client projects including e-commerce platforms and SaaS applications.",
-        achievements: [
-            "Built 15+ production-ready web applications",
-            "Improved code quality through test-driven development",
-            "Collaborated with design team on UI/UX improvements",
-        ],
-    },
-    {
-        title: "Frontend Developer",
-        company: "StartupHub",
-        period: "2019 - 2020",
-        description: "Focused on creating responsive and accessible user interfaces using React and modern CSS frameworks.",
-        achievements: [
-            "Developed reusable component library",
-            "Achieved 95+ Lighthouse scores on all projects",
-            "Contributed to open-source projects",
-        ],
-    },
+  {
+    id: "ts-media",
+    company: "TS Media",
+    role: "Senior Full-Stack Developer",
+    period: "2022 - Present",
+    location: "Islamabad",
+    description:
+      "Spearheading the development of enterprise-level web solutions. I bridge the gap between complex backend logic and intuitive frontend design, leading a team of 5 developers.",
+    stack: ["Next.js", "Node.js", "AWS", "Docker"],
+    achievements: [
+      "Architected a microservices system handling 50k+ daily users",
+      "Reduced cloud infrastructure costs by 35% via optimization",
+      "Implemented a unified design system used across 4 products",
+    ],
+  },
+  {
+    id: "digital-solutions",
+    company: "Digital Solutions",
+    role: "Full-Stack Developer",
+    period: "2020 - 2022",
+    location: "Remote",
+    description:
+      "Delivered high-performance e-commerce and SaaS platforms for international clients. Focused on scalability, payment integrations, and conversion optimization.",
+    stack: ["React", "PostgreSQL", "Stripe", "Redis"],
+    achievements: [
+      "Launched 10+ custom e-commerce stores with Shopify/WooCommerce",
+      "Optimized database queries reducing latency by 60%",
+      "Integrated automated testing, increasing code reliability",
+    ],
+  },
+  {
+    id: "startup-hub",
+    company: "StartupHub",
+    role: "Frontend Developer",
+    period: "2019 - 2020",
+    location: "Islamabad",
+    description:
+      "Crafted pixel-perfect user interfaces for early-stage startups. Specialized in translating Figma designs into responsive, accessible code.",
+    stack: ["React", "GSAP", "Figma", "Sass"],
+    achievements: [
+      "Achieved consistent 98/100 Lighthouse performance scores",
+      "Developed a component library reducing dev time by 40%",
+      "Mentored 2 interns in modern frontend practices",
+    ],
+  },
 ];
 
 export function Experience() {
-    return (
-        <section id="experience" className="w-full py-12 md:py-24 px-4 md:px-6 bg-secondary/20">
-            <div className="max-w-6xl mx-auto">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="mb-16"
-                >
-                    <h2 className="text-5xl md:text-7xl font-bold font-heading mb-4">
-                        <span className="text-primary/60">&lt;</span>Experience<span className="text-primary/60">/&gt;</span>
-                    </h2>
-                    <p className="text-xl text-muted-foreground">
-                        My professional journey and key accomplishments
-                    </p>
-                </motion.div>
+  const [activeId, setActiveId] = useState(experiences[0].id);
+  const containerRef = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const prevActiveIdRef = useRef<string>(activeId);
 
-                <div className="space-y-8">
-                    {experiences.map((exp, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1 }}
-                            className="relative"
-                        >
-                            <div className="bg-card/50 border border-border/50 rounded-xl p-8 hover:border-primary/50 transition-colors">
-                                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
-                                    <div className="flex items-start gap-3">
-                                        <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
-                                            <Briefcase className="w-6 h-6 text-primary" />
-                                        </div>
-                                        <div>
-                                            <h3 className="text-2xl font-bold mb-1">{exp.title}</h3>
-                                            <p className="text-lg text-primary font-medium">{exp.company}</p>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center gap-2 text-muted-foreground">
-                                        <Calendar className="w-4 h-4" />
-                                        <span className="text-sm font-medium">{exp.period}</span>
-                                    </div>
-                                </div>
+  useGSAP(
+    () => {
+      gsap.fromTo(
+        ".exp-menu-item",
+        {
+          x: -20,
+          opacity: 0,
+        },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 80%",
+          },
+        }
+      );
 
-                                <p className="text-muted-foreground mb-4 leading-relaxed">
-                                    {exp.description}
-                                </p>
+      gsap.fromTo(
+        contentRef.current,
+        {
+          y: 20,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 80%",
+          },
+        }
+      );
+    },
+    { scope: containerRef }
+  );
 
-                                <div className="space-y-2">
-                                    <p className="text-sm font-semibold text-foreground/80">Key Achievements:</p>
-                                    <ul className="space-y-2">
-                                        {exp.achievements.map((achievement, idx) => (
-                                            <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
-                                                <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 shrink-0" />
-                                                <span>{achievement}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </div>
-                        </motion.div>
-                    ))}
+  // Animate content change
+  useEffect(() => {
+    if (prevActiveIdRef.current !== activeId && contentRef.current) {
+      const tl = gsap.timeline();
+
+      tl.to(contentRef.current, {
+        opacity: 0,
+        y: -10,
+        duration: 0.2,
+        ease: "power2.in",
+      })
+        .set(contentRef.current, {
+          y: 10,
+        })
+        .to(contentRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 0.4,
+          ease: "power2.out",
+        });
+
+      prevActiveIdRef.current = activeId;
+    }
+  }, [activeId]);
+
+  const activeExp =
+    experiences.find((e) => e.id === activeId) || experiences[0];
+
+  return (
+    <section
+      ref={containerRef}
+      id="experience"
+      className="w-full py-24 md:py-32 bg-background relative"
+    >
+      <div className="container px-4 md:px-6 max-w-7xl mx-auto">
+        <div className="mb-16 md:mb-20">
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold tracking-tighter mb-6">
+            Experience
+          </h2>
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl">
+            My professional journey across different roles and companies.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 lg:gap-24">
+          {/* Sidebar Menu */}
+          <div className="md:col-span-4 flex flex-col gap-3">
+            {experiences.map((exp) => (
+              <button
+                key={exp.id}
+                onClick={() => setActiveId(exp.id)}
+                className={cn(
+                  "exp-menu-item text-left px-6 py-5 rounded-xl transition-all duration-300 border group relative overflow-hidden",
+                  activeId === exp.id
+                    ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20 border-primary"
+                    : "bg-card hover:bg-secondary/50 border-border/50 text-muted-foreground hover:text-foreground hover:border-border"
+                )}
+              >
+                <div className="relative z-10 flex justify-between items-center">
+                  <span className="text-base md:text-lg font-bold tracking-tight">
+                    {exp.company}
+                  </span>
+                  {activeId === exp.id && (
+                    <ArrowUpRight className="w-5 h-5 flex-shrink-0 ml-2" />
+                  )}
                 </div>
+              </button>
+            ))}
+          </div>
+
+          {/* Content Area */}
+          <div ref={contentRef} className="md:col-span-8 min-h-[400px]">
+            <div key={activeExp.id}>
+              <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-6 gap-4">
+                <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground">
+                  {activeExp.role}
+                </h3>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 text-xs md:text-sm font-mono text-muted-foreground uppercase tracking-wider">
+                  <span className="flex items-center gap-1.5">
+                    <Calendar className="w-4 h-4" /> {activeExp.period}
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <MapPin className="w-4 h-4" /> {activeExp.location}
+                  </span>
+                </div>
+              </div>
+
+              <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed mb-8">
+                {activeExp.description}
+              </p>
+
+              <div className="space-y-6 mb-8">
+                <h4 className="text-xs md:text-sm font-mono uppercase tracking-widest text-primary">
+                  Key Achievements
+                </h4>
+                <ul className="space-y-3">
+                  {activeExp.achievements.map((item, i) => (
+                    <li
+                      key={i}
+                      className="flex items-start gap-3 text-sm md:text-base text-foreground/90 leading-relaxed"
+                    >
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="flex flex-wrap gap-2 pt-8 border-t border-border/40">
+                {activeExp.stack.map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-3 py-1.5 rounded-md bg-secondary/30 text-xs md:text-sm font-medium text-muted-foreground border border-border/30"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
             </div>
-        </section>
-    );
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }

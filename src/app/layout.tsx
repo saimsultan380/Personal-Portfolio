@@ -5,42 +5,50 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { ThemeProvider } from "@/components/theme-provider";
 import { FloatingActions } from "@/components/floating-actions";
+import { Cursor } from "@/components/cursor";
+import { ScrollProgress } from "@/components/scroll-progress";
+import { SmoothScroll } from "@/components/smooth-scroll";
+import { LoadingScreen } from "@/components/loading-screen";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
-  display: 'swap',
+  display: "swap",
   preload: true,
 });
 
 const sora = Sora({
   subsets: ["latin"],
   variable: "--font-sora",
-  display: 'swap',
+  display: "swap",
   preload: true,
 });
 
 export const metadata: Metadata = {
-  title: "Saim Sultan | WordPress & Frontend Developer in Islamabad | Next.js Expert",
-  description: "Expert WordPress Developer & Frontend Developer in Islamabad, Pakistan. Specializing in React, Next.js, TypeScript, and custom WordPress themes. 5+ years building high-performance web applications.",
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "https://saimsultan.com"
+  ),
+  title: {
+    default: "Saim Sultan | Web Developer in Lahore, Karachi, Islamabad & Multan",
+    template: "%s | Saim Sultan"
+  },
+  description:
+    "Top-rated Web Developer in Pakistan serving Layyah, Multan, Lahore, Islamabad, Rawalpindi, Faisalabad & Karachi. Expert in WordPress, Shopify, Next.js, and Social Media Marketing.",
   keywords: [
-    "WordPress Developer Islamabad",
-    "Frontend Developer Pakistan",
-    "React Developer",
-    "Next.js Developer",
-    "Full-Stack Developer",
-    "Custom WordPress Themes",
-    "TypeScript Developer",
-    "Web Developer Islamabad",
-    "JavaScript Developer",
-    "UI/UX Developer",
-    "Responsive Web Design",
-    "WordPress Theme Development",
-    "React Next.js Developer",
-    "Modern Web Applications",
-    "Saim Sultan Developer"
+    "Web Developer Layyah",
+    "WordPress Developer Multan",
+    "Shopify Expert Lahore",
+    "Web Development Islamabad",
+    "Frontend Developer Rawalpindi",
+    "Full Stack Developer Faisalabad",
+    "Social Media Marketing Karachi",
+    "Next.js Developer Pakistan",
+    "Custom Website Development",
+    "Ecommerce Solutions Pakistan",
+    "Saim Sultan Portfolio",
+    "Freelance Web Developer Pakistan"
   ],
   authors: [{ name: "Saim Sultan" }],
   creator: "Saim Sultan",
@@ -49,23 +57,25 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://saimsultan.com",
-    title: "Saim Sultan | WordPress & Frontend Developer in Islamabad",
-    description: "Expert WordPress Developer & Frontend Developer specializing in React, Next.js, and custom WordPress themes. Based in Islamabad, Pakistan.",
-    siteName: "Saim Sultan Portfolio",
+    title: "Saim Sultan | Expert Web Developer in Pakistan",
+    description:
+      "Professional Web Development & Digital Marketing services in Layyah, Multan, Lahore, Islamabad, and across Pakistan. Specializing in WordPress, Shopify, and Custom Code.",
+    siteName: "Saim Sultan",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Saim Sultan - WordPress & Frontend Developer"
-      }
-    ]
+        alt: "Saim Sultan - Web Developer Pakistan",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Saim Sultan | WordPress & Frontend Developer",
-    description: "Expert WordPress & Frontend Developer in Islamabad. Specializing in React, Next.js, and custom WordPress themes.",
-    images: ["/og-image.jpg"]
+    title: "Saim Sultan | Web Developer & Digital Marketer",
+    description:
+      "Expert Web Developer serving all major cities in Pakistan. WordPress, Shopify, and Custom Solutions.",
+    images: ["/og-image.jpg"],
   },
   robots: {
     index: true,
@@ -73,9 +83,9 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
   verification: {
@@ -90,44 +100,49 @@ export default function RootLayout({
 }>) {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Person",
+    "@type": "ProfessionalService",
     name: "Saim Sultan",
     url: "https://saimsultan.com",
-    image: "/profile.jpg",
-    jobTitle: "WordPress & Frontend Developer",
-    description: "Expert WordPress Developer and Frontend Developer specializing in React, Next.js, TypeScript, and custom WordPress theme development",
+    image: "https://saimsultan.com/profile.jpg",
+    priceRange: "$$",
+    description:
+      "Expert Web Developer and Digital Marketer providing top-tier services in WordPress, Shopify, Next.js, and Social Media Marketing across Pakistan.",
     address: {
       "@type": "PostalAddress",
       addressLocality: "Islamabad",
-      addressCountry: "Pakistan"
+      addressCountry: "Pakistan",
     },
+    areaServed: [
+      { "@type": "City", name: "Layyah" },
+      { "@type": "City", name: "Multan" },
+      { "@type": "City", name: "Lahore" },
+      { "@type": "City", name: "Islamabad" },
+      { "@type": "City", name: "Rawalpindi" },
+      { "@type": "City", name: "Faisalabad" },
+      { "@type": "City", name: "Karachi" }
+    ],
     email: "saim@mrwebsol.com",
     telephone: "+92-300-6031380",
     sameAs: [
-      "https://github.com/saimsultan",
-      "https://linkedin.com/in/saimsultan"
+      "https://github.com/saimsultan380",
+      "https://linkedin.com/in/saim-sultan-wordpress-developer",
+      "https://x.com/saimthewebguy"
     ],
     knowsAbout: [
       "WordPress Development",
-      "Frontend Development",
-      "React",
+      "Shopify Development",
+      "Web Development",
+      "Social Media Marketing",
+      "SEO",
       "Next.js",
-      "TypeScript",
-      "JavaScript",
-      "Custom WordPress Themes",
-      "Web Application Development",
-      "UI/UX Design",
-      "Responsive Web Design"
+      "React",
+      "Full Stack Development"
     ],
-    alumniOf: {
-      "@type": "EducationalOrganization",
-      name: "University of Engineering & Technology"
-    },
     worksFor: {
       "@type": "Organization",
       name: "Mr Web Sol",
-      url: "https://mrwebsol.com"
-    }
+      url: "https://mrwebsol.com",
+    },
   };
 
   return (
@@ -140,9 +155,21 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${inter.variable} ${sora.variable} font-sans antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+      <body
+        className={`${inter.variable} ${sora.variable} font-sans antialiased`}
+        suppressHydrationWarning
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <LoadingScreen />
+          <SmoothScroll />
+          <ScrollProgress />
           <Navbar />
+          <Cursor /> {/* Replaced CustomCursor with Cursor */}
           {children}
           <Footer />
           <FloatingActions />

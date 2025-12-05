@@ -14,16 +14,20 @@ const Skills = dynamic(() => import("@/components/skills").then(mod => ({ defaul
 const Experience = dynamic(() => import("@/components/experience").then(mod => ({ default: mod.Experience })), {
   loading: () => <div className="w-full py-24" />
 });
-const Education = dynamic(() => import("@/components/education").then(mod => ({ default: mod.Education })), {
-  loading: () => <div className="w-full py-24" />
-});
 const Projects = dynamic(() => import("@/components/projects").then(mod => ({ default: mod.Projects })), {
   loading: () => <div className="w-full py-24" />
 });
+const Process = dynamic(() => import("@/components/process").then(mod => ({ default: mod.Process })), {
+  loading: () => <div className="w-full py-24" />
+});
+
 const Testimonials = dynamic(() => import("@/components/testimonials").then(mod => ({ default: mod.Testimonials })), {
   loading: () => <div className="w-full py-24" />
 });
 const Contact = dynamic(() => import("@/components/contact").then(mod => ({ default: mod.Contact })), {
+  loading: () => <div className="w-full py-24" />
+});
+const Education = dynamic(() => import("@/components/education").then(mod => ({ default: mod.Education })), {
   loading: () => <div className="w-full py-24" />
 });
 
@@ -34,9 +38,11 @@ export default function Home() {
       <About />
       <Services />
       <Skills />
+      <Process />
       <Experience />
       <Education />
       <Projects />
+
       <Testimonials />
       <Contact />
     </div>

@@ -1,183 +1,121 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const testimonials = [
-    {
-        name: "Sarah Johnson",
-        role: "CEO at TechStart",
-        company: "TechStart Inc.",
-        content: "Working with Saim was an absolute pleasure. His attention to detail and code quality exceeded our expectations. The project was delivered on time and within budget.",
-        avatar: "SJ",
-    },
-    {
-        name: "Michael Chen",
-        role: "Product Manager",
-        company: "Digital Solutions",
-        content: "Saim's exceptional work transformed our website performance. Our page load times decreased by 60% and conversions increased significantly. Highly recommended!",
-        avatar: "MC",
-    },
-    {
-        name: "Emily Rodriguez",
-        role: "Founder",
-        company: "StyleHub",
-        content: "The e-commerce platform Saim built for us is fantastic. Clean code, beautiful UI, and seamless payment integration. He truly understands modern web development!",
-        avatar: "ER",
-    },
-    {
-        name: "David Park",
-        role: "CTO",
-        company: "InnovateLabs",
-        content: "Saim Sultan demonstrated outstanding technical skills and great communication throughout the project. The full-stack solution was robust, scalable, and well-documented.",
-        avatar: "DP",
-    },
-    {
-        name: "Amina Khan",
-        role: "Marketing Director",
-        company: "GrowthHub",
-        content: "Saim's expertise in SEO and performance optimization helped us rank higher in search results. Our organic traffic increased by 150% within three months!",
-        avatar: "AK",
-    },
+  {
+    text: "Saim's attention to detail is unmatched. The site isn't just fast; it feels alive.",
+    author: "Sarah Johnson",
+    role: "CEO, TechStart",
+  },
+  {
+    text: "Delivered a complex e-commerce platform ahead of schedule. True professional.",
+    author: "Michael Chen",
+    role: "Founder, DigitalFlow",
+  },
+  {
+    text: "Best developer we've worked with. The animations are buttery smooth.",
+    author: "Emily Rodriguez",
+    role: "Art Director, Studio X",
+  },
+  {
+    text: "He translated our vague ideas into a stunning, functional reality.",
+    author: "David Park",
+    role: "Product Lead, Innovate",
+  },
 ];
 
 export function Testimonials() {
-    const [current, setCurrent] = useState(0);
-    const [direction, setDirection] = useState(0);
+  const containerRef = useRef<HTMLElement>(null);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const sliderRef2 = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setDirection(1);
-            setCurrent((prev) => (prev + 1) % testimonials.length);
-        }, 5000);
-        return () => clearInterval(timer);
-    }, []);
-
-    const slideVariants = {
-        enter: (direction: number) => ({
-            x: direction > 0 ? 1000 : -1000,
-            opacity: 0,
-        }),
-        center: {
-            x: 0,
-            opacity: 1,
-        },
-        exit: (direction: number) => ({
-            x: direction < 0 ? 1000 : -1000,
-            opacity: 0,
-        }),
-    };
-
-    const paginate = (newDirection: number) => {
-        setDirection(newDirection);
-        setCurrent((prev) => {
-            const next = prev + newDirection;
-            if (next < 0) return testimonials.length - 1;
-            if (next >= testimonials.length) return 0;
-            return next;
+  useGSAP(
+    () => {
+        // Marquee Effect 1 (Left to Right)
+        gsap.to(sliderRef.current, {
+            xPercent: -50,
+            ease: "none",
+            duration: 20,
+            repeat: -1,
         });
-    };
 
-    return (
-        <section className="relative w-full py-12 md:py-24 px-4 md:px-6 bg-secondary/20">
-            <div className="max-w-5xl mx-auto">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-16"
-                >
-                    <h2 className="text-5xl md:text-7xl font-bold font-heading mb-4">
-                        <span className="text-primary/60">&lt;</span>Client Testimonials<span className="text-primary/60">/&gt;</span>
-                    </h2>
-                    <p className="text-xl text-muted-foreground">
-                        What my clients say about working with me
-                    </p>
-                </motion.div>
+         // Marquee Effect 2 (Right to Left)
+         gsap.to(sliderRef2.current, {
+            xPercent: 50,
+            ease: "none",
+            duration: 20,
+            repeat: -1,
+        });
+    },
+    { scope: containerRef }
+  );
 
-                <div className="relative">
-                    <div className="overflow-hidden">
-                        <AnimatePresence initial={false} custom={direction} mode="wait">
-                            <motion.div
-                                key={current}
-                                custom={direction}
-                                variants={slideVariants}
-                                initial="enter"
-                                animate="center"
-                                exit="exit"
-                                transition={{
-                                    x: { type: "spring", stiffness: 300, damping: 30 },
-                                    opacity: { duration: 0.2 },
-                                }}
-                            >
-                                <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
-                                    <CardContent className="p-8 md:p-12">
-                                        <Quote className="w-12 h-12 text-primary/20 mb-6" />
-                                        <p className="text-lg md:text-xl text-foreground/90 mb-8 leading-relaxed">
-                                            "{testimonials[current].content}"
-                                        </p>
-                                        <div className="flex items-center gap-4">
-                                            <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
-                                                <span className="text-lg font-bold text-primary">
-                                                    {testimonials[current].avatar}
-                                                </span>
-                                            </div>
-                                            <div>
-                                                <p className="font-bold text-lg">
-                                                    {testimonials[current].name}
-                                                </p>
-                                                <p className="text-sm text-muted-foreground">
-                                                    {testimonials[current].role} at {testimonials[current].company}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            </motion.div>
-                        </AnimatePresence>
-                    </div>
+  return (
+    <section
+      ref={containerRef}
+      className="w-full py-32 overflow-hidden bg-background"
+    >
+      <div className="container px-4 md:px-6 mb-16 text-center">
+        <h2 className="text-5xl md:text-7xl font-heading font-bold tracking-tighter">
+          Client Stories
+        </h2>
+      </div>
 
-                    {/* Navigation */}
-                    <div className="flex items-center justify-center gap-4 mt-8">
-                        <Button
-                            variant="outline"
-                            size="icon"
-                            onClick={() => paginate(-1)}
-                            className="rounded-full"
-                        >
-                            <ChevronLeft className="w-5 h-5" />
-                        </Button>
-
-                        <div className="flex gap-2">
-                            {testimonials.map((_, index) => (
-                                <button
-                                    key={index}
-                                    onClick={() => {
-                                        setDirection(index > current ? 1 : -1);
-                                        setCurrent(index);
-                                    }}
-                                    className={`w-2 h-2 rounded-full transition-all ${index === current
-                                        ? "bg-primary w-8"
-                                        : "bg-muted-foreground/30"
-                                        }`}
-                                />
-                            ))}
-                        </div>
-
-                        <Button
-                            variant="outline"
-                            size="icon"
-                            onClick={() => paginate(1)}
-                            className="rounded-full"
-                        >
-                            <ChevronRight className="w-5 h-5" />
-                        </Button>
-                    </div>
+      {/* First Row */}
+      <div className="flex w-[200%] mb-8" ref={sliderRef}>
+        {[...testimonials, ...testimonials, ...testimonials].map((item, i) => (
+          <div
+            key={i}
+            className="w-[400px] md:w-[500px] shrink-0 px-4"
+          >
+            <div className="h-full p-8 rounded-3xl bg-secondary/10 border border-border/50 hover:bg-secondary/20 transition-colors">
+              <p className="text-xl md:text-2xl font-medium leading-relaxed mb-6">
+                &ldquo;{item.text}&rdquo;
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center font-bold text-primary">
+                    {item.author.charAt(0)}
                 </div>
+                <div>
+                  <p className="font-bold text-sm">{item.author}</p>
+                  <p className="text-xs text-muted-foreground">{item.role}</p>
+                </div>
+              </div>
             </div>
-        </section>
-    );
+          </div>
+        ))}
+      </div>
+
+      {/* Second Row (Reverse) */}
+       <div className="flex w-[200%] -ml-[100%]" ref={sliderRef2}>
+        {[...testimonials, ...testimonials, ...testimonials].map((item, i) => (
+          <div
+            key={i}
+            className="w-[400px] md:w-[500px] shrink-0 px-4"
+          >
+            <div className="h-full p-8 rounded-3xl bg-card border border-border hover:border-primary/30 transition-colors">
+              <p className="text-xl md:text-2xl font-medium leading-relaxed mb-6">
+                &ldquo;{item.text}&rdquo;
+              </p>
+              <div className="flex items-center gap-3">
+                 <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center font-bold text-primary">
+                    {item.author.charAt(0)}
+                </div>
+                <div>
+                  <p className="font-bold text-sm">{item.author}</p>
+                  <p className="text-xs text-muted-foreground">{item.role}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
 }

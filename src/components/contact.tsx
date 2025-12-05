@@ -1,180 +1,123 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { motion } from "framer-motion";
-import { Mail, MapPin, Phone, Send } from "lucide-react";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-
-const formSchema = z.object({
-    name: z.string().min(2, {
-        message: "Name must be at least 2 characters.",
-    }),
-    email: z.string().email({
-        message: "Please enter a valid email address.",
-    }),
-    message: z.string().min(10, {
-        message: "Message must be at least 10 characters.",
-    }),
-});
-
-const contactInfo = [
-    { icon: Mail, label: "Email", value: "saim@mrwebsol.com", href: "mailto:saim@mrwebsol.com" },
-    { icon: Phone, label: "Phone", value: "+92 300 6031380", href: "tel:+923006031380" },
-    { icon: MapPin, label: "Location", value: "Islamabad, Pakistan" },
-];
+import { useRef, useState } from "react";
+import { ArrowUpRight, Copy, Check } from "lucide-react";
+import Link from "next/link";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { Magnetic } from "@/components/ui/magnetic";
 
 export function Contact() {
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            name: "",
-            email: "",
-            message: "",
+  const containerRef = useRef<HTMLElement>(null);
+  const [copied, setCopied] = useState(false);
+
+  const copyEmail = () => {
+    navigator.clipboard.writeText("saim@mrwebsol.com");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  useGSAP(
+    () => {
+      gsap.from(".contact-line", {
+        y: 100,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 70%",
         },
-    });
+      });
+    },
+    { scope: containerRef }
+  );
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        // Create mailto link with form data
-        const subject = `Portfolio Contact from ${values.name}`;
-        const body = `Name: ${values.name}%0D%0AEmail: ${values.email}%0D%0A%0D%0AMessage:%0D%0A${values.message}`;
-        const mailtoLink = `mailto:saim@mrwebsol.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+  return (
+    <section
+      ref={containerRef}
+      id="contact"
+      className="min-h-screen w-full bg-background flex flex-col justify-center px-4 md:px-6 py-24 relative overflow-hidden"
+    >
+      <div className="container mx-auto max-w-6xl relative z-10">
+        <div className="mb-12">
+          <div className="overflow-hidden">
+            <p className="contact-line text-xl md:text-2xl font-mono text-muted-foreground mb-4">
+              ( Have an idea? )
+            </p>
+          </div>
+          <div className="overflow-hidden">
+            <h2 className="contact-line text-[12vw] leading-[0.85] font-heading font-bold tracking-tighter uppercase text-foreground">
+              Let&apos;s Work
+            </h2>
+          </div>
+          <div className="overflow-hidden">
+            <h2 className="contact-line text-[12vw] leading-[0.85] font-heading font-bold tracking-tighter uppercase text-primary">
+              Together
+            </h2>
+          </div>
+        </div>
 
-        // Open email client
-        window.location.href = mailtoLink;
-
-        // Reset form
-        form.reset();
-    }
-
-    return (
-        <section id="contact" className="w-full py-12 md:py-24 px-4 md:px-6 bg-secondary/20">
-            <div className="max-w-6xl mx-auto">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5 }}
-                    className="text-center mb-16"
-                >
-                    <h2 className="text-3xl md:text-5xl font-bold font-heading mb-6">
-                        <span className="text-primary/60">&lt;</span>Let's Work <span className="text-primary">Together</span><span className="text-primary/60">/&gt;</span>
-                    </h2>
-                    <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-                        Have a project in mind? Let's discuss how I can help bring your ideas to life.
-                    </p>
-                </motion.div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
-                    {/* Contact Info - Sidebar */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5 }}
-                        className="lg:col-span-2 space-y-6"
-                    >
-                        {contactInfo.map((item, index) => (
-                            <div key={index} className="flex items-start gap-4">
-                                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
-                                    <item.icon className="w-6 h-6 text-primary" />
-                                </div>
-                                <div>
-                                    <h3 className="text-sm font-medium text-muted-foreground mb-1">
-                                        {item.label}
-                                    </h3>
-                                    {item.href ? (
-                                        <a
-                                            href={item.href}
-                                            className="text-base font-semibold hover:text-primary transition-colors"
-                                        >
-                                            {item.value}
-                                        </a>
-                                    ) : (
-                                        <p className="text-base font-semibold">{item.value}</p>
-                                    )}
-                                </div>
-                            </div>
-                        ))}
-                    </motion.div>
-
-                    {/* Contact Form */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5 }}
-                        className="lg:col-span-3"
-                    >
-                        <div className="bg-card border border-border/50 rounded-xl p-8">
-                            <Form {...form}>
-                                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <FormField
-                                            control={form.control}
-                                            name="name"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>Full Name</FormLabel>
-                                                    <FormControl>
-                                                        <Input placeholder="John Doe" {...field} />
-                                                    </FormControl>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                        <FormField
-                                            control={form.control}
-                                            name="email"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>Email Address</FormLabel>
-                                                    <FormControl>
-                                                        <Input placeholder="john@example.com" {...field} />
-                                                    </FormControl>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                    </div>
-                                    <FormField
-                                        control={form.control}
-                                        name="message"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>Your Message</FormLabel>
-                                                <FormControl>
-                                                    <Textarea
-                                                        placeholder="Tell me about your project..."
-                                                        className="min-h-[150px] resize-none"
-                                                        {...field}
-                                                    />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                    <Button type="submit" className="w-full" size="lg">
-                                        <Send className="w-4 h-4 mr-2" />
-                                        Send Message
-                                    </Button>
-                                </form>
-                            </Form>
-                        </div>
-                    </motion.div>
+        <div className="flex flex-col md:flex-row gap-12 md:gap-24 items-start mt-12">
+          <div className="contact-line space-y-8 flex-1">
+            <Magnetic>
+              <div
+                onClick={copyEmail}
+                className="group cursor-pointer inline-flex items-center gap-4 text-3xl md:text-5xl font-bold border-b border-border pb-4 hover:border-primary transition-colors text-foreground"
+              >
+                <span>saim@mrwebsol.com</span>
+                <div className="relative w-8 h-8">
+                  {copied ? (
+                    <Check className="w-8 h-8 text-green-500" />
+                  ) : (
+                    <Copy className="w-8 h-8 text-muted-foreground group-hover:text-primary transition-colors" />
+                  )}
                 </div>
+              </div>
+            </Magnetic>
+            <p className="text-muted-foreground text-lg max-w-md">
+              Currently available for freelance projects and open to full-time
+              opportunities.
+            </p>
+          </div>
+
+          <div className="contact-line flex flex-col gap-4">
+            <h3 className="text-sm font-mono uppercase text-muted-foreground tracking-widest">
+              Socials
+            </h3>
+            <div className="flex gap-4">
+              {[
+                { name: "LinkedIn", url: "https://www.linkedin.com/in/saim-sultan-wordpress-developer/" },
+                { name: "GitHub", url: "https://github.com/saimsultan380" },
+                { name: "Twitter", url: "https://x.com/saimthewebguy" },
+              ].map((social) => (
+                <Magnetic key={social.name}>
+                  <Link
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-6 py-3 rounded-full border border-border hover:bg-foreground hover:text-background transition-all duration-300 flex items-center gap-2 text-foreground"
+                  >
+                    {social.name} <ArrowUpRight className="w-4 h-4" />
+                  </Link>
+                </Magnetic>
+              ))}
             </div>
-        </section>
-    );
+          </div>
+        </div>
+      </div>
+
+      {/* Footer Strip */}
+      <div className="absolute bottom-0 left-0 w-full p-6 flex justify-between items-end text-xs text-muted-foreground/40 font-mono uppercase">
+        <div>
+          <p>© {new Date().getFullYear()} Saim Sultan</p>
+          <p>Islamabad, Pakistan</p>
+        </div>
+        <div className="text-right">
+          <p>Designed & Built</p>
+          <p>with Next.js + GSAP</p>
+        </div>
+      </div>
+    </section>
+  );
 }

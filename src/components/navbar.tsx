@@ -2,17 +2,13 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Menu, Code2, Moon, Sun } from "lucide-react";
+import { Code2, Moon, Sun, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-    Sheet,
-    SheetContent,
-    SheetTrigger,
-    SheetTitle,
-    SheetHeader,
-} from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { Magnetic } from "@/components/ui/magnetic";
 
 const navItems = [
     { name: "About", href: "#about" },
@@ -27,6 +23,9 @@ export function Navbar() {
     const { theme, setTheme } = useTheme();
     const [mounted, setMounted] = React.useState(false);
 
+    const navRef = React.useRef<HTMLDivElement>(null);
+    const menuRef = React.useRef<HTMLDivElement>(null);
+
     React.useEffect(() => {
         setMounted(true);
         const handleScroll = () => {
@@ -40,129 +39,151 @@ export function Navbar() {
         setTheme(theme === "dark" ? "light" : "dark");
     };
 
+    useGSAP(() => {
+        gsap.from(navRef.current, {
+            y: -100,
+            opacity: 0,
+            duration: 1,
+            ease: "power4.out",
+            delay: 0.5
+        });
+    }, { scope: navRef });
+
+    useGSAP(() => {
+        if (isOpen) {
+            gsap.to(menuRef.current, {
+                x: 0,
+                duration: 0.6,
+                ease: "expo.out"
+            });
+            gsap.fromTo(".mobile-link",
+                { y: 50, opacity: 0 },
+                { y: 0, opacity: 1, stagger: 0.1, duration: 0.4, delay: 0.2 }
+            );
+        } else {
+            gsap.to(menuRef.current, {
+                x: "100%",
+                duration: 0.6,
+                ease: "expo.in"
+            });
+        }
+    }, [isOpen]);
+
     return (
-        <header
-            className={cn(
-                "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-                isScrolled
-                    ? "bg-background/80 backdrop-blur-md border-b border-border/50 py-4"
-                    : "bg-transparent py-6"
-            )}
-        >
-            <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-                <Link href="/" className="flex items-center space-x-2">
-                    <Code2 className="h-6 w-6" />
-                    <span className="font-bold text-xl font-heading">Saim Sultan</span>
-                </Link>
-
-                {/* Desktop Navigation */}
-                <nav className="hidden md:flex items-center gap-8">
-                    {navItems.map((item) => (
-                        <Link
-                            key={item.name}
-                            href={item.href}
-                            className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors relative group"
-                        >
-                            {item.name}
-                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full" />
+        <>
+            <div ref={navRef} className="fixed top-6 inset-x-0 z-50 flex justify-center pointer-events-none px-4">
+                <div className={cn(
+                    "pointer-events-auto flex items-center gap-2 p-2 rounded-full border transition-all duration-500 ease-out",
+                    isScrolled
+                        ? "bg-background/70 backdrop-blur-xl border-border/40 shadow-2xl shadow-primary/5"
+                        : "bg-transparent border-transparent"
+                )}>
+                    {/* Logo */}
+                    <Magnetic>
+                        <Link href="/" className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors group">
+                            <Code2 className="w-6 h-6 text-primary group-hover:rotate-12 transition-transform" />
                         </Link>
-                    ))}
-                    {mounted && (
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={toggleTheme}
-                            className="ml-2"
-                        >
-                            {theme === "dark" ? (
-                                <Sun className="w-5 h-5" />
-                            ) : (
-                                <Moon className="w-5 h-5" />
-                            )}
-                            <span className="sr-only">Toggle theme</span>
-                        </Button>
-                    )}
-                    <Button asChild variant="default">
-                        <Link href="#contact">Hire Me</Link>
-                    </Button>
-                </nav>
+                    </Magnetic>
 
-                {/* Mobile Navigation */}
-                <div className="md:hidden flex items-center gap-2">
-                    {mounted && (
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={toggleTheme}
-                        >
-                            {theme === "dark" ? (
-                                <Sun className="w-5 h-5" />
-                            ) : (
-                                <Moon className="w-5 h-5" />
-                            )}
-                            <span className="sr-only">Toggle theme</span>
-                        </Button>
-                    )}
-                    <Sheet open={isOpen} onOpenChange={setIsOpen}>
-                        <SheetTrigger asChild>
-                            <Button variant="ghost" size="icon">
-                                <Menu className="w-6 h-6" />
-                                <span className="sr-only">Toggle menu</span>
-                            </Button>
-                        </SheetTrigger>
-                        <SheetContent side="left" className="w-[300px] sm:w-[400px] flex flex-col">
-                            <SheetHeader className="border-b border-border/50 pb-4">
-                                <SheetTitle className="flex items-center gap-2">
-                                    <Code2 className="h-6 w-6 text-primary" />
-                                    <span className="font-heading text-xl">Saim Sultan</span>
-                                </SheetTitle>
-                            </SheetHeader>
+                    {/* Desktop Nav */}
+                    <nav className="hidden md:flex items-center px-4 gap-1">
+                        {navItems.map((item) => (
+                            <Magnetic key={item.name}>
+                                <Link
+                                    href={item.href}
+                                    className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-full hover:bg-secondary/50"
+                                >
+                                    {item.name}
+                                </Link>
+                            </Magnetic>
+                        ))}
+                    </nav>
 
-                            {/* Navigation Links */}
-                            <nav className="flex flex-col gap-1 mt-6 flex-1">
-                                {navItems.map((item, index) => (
-                                    <Link
-                                        key={item.name}
-                                        href={item.href}
-                                        className="group relative px-4 py-3 rounded-lg text-lg font-medium text-foreground/70 hover:text-primary hover:bg-primary/5 transition-all duration-200"
-                                        onClick={() => setIsOpen(false)}
-                                        style={{
-                                            animation: `slideIn 0.3s ease-out ${index * 0.1}s both`
-                                        }}
-                                    >
-                                        <span className="flex items-center gap-3">
-                                            <span className="w-1.5 h-1.5 rounded-full bg-primary/0 group-hover:bg-primary transition-colors" />
-                                            {item.name}
-                                        </span>
-                                    </Link>
-                                ))}
-                            </nav>
-
-                            {/* Bottom CTA Button */}
-                            <div className="pt-6 border-t border-border/50 mt-auto">
-                                <Button asChild className="w-full h-12 text-base rounded-none" size="lg">
-                                    <Link href="#contact" onClick={() => setIsOpen(false)}>
-                                        Hire Me
-                                    </Link>
+                    <div className="hidden md:flex items-center gap-2 pl-2 border-l border-border/20">
+                        {mounted && (
+                            <Magnetic>
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    onClick={toggleTheme}
+                                    className="rounded-full w-10 h-10 hover:bg-secondary/50"
+                                >
+                                    {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
                                 </Button>
-                            </div>
+                            </Magnetic>
+                        )}
+                        <Magnetic>
+                            <Button asChild className="rounded-full px-6 h-10">
+                                <Link href="#contact">Hire Me</Link>
+                            </Button>
+                        </Magnetic>
+                    </div>
 
-                            <style jsx>{`
-                                @keyframes slideIn {
-                                    from {
-                                        opacity: 0;
-                                        transform: translateX(20px);
-                                    }
-                                    to {
-                                        opacity: 1;
-                                        transform: translateX(0);
-                                    }
-                                }
-                            `}</style>
-                        </SheetContent>
-                    </Sheet>
+                    {/* Mobile Menu Toggle */}
+                    <div className="md:hidden flex items-center gap-2">
+                        {mounted && (
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={toggleTheme}
+                                className="rounded-full w-10 h-10 bg-background/50 backdrop-blur-lg"
+                            >
+                                {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                            </Button>
+                        )}
+                        <Button
+                            variant="default"
+                            size="icon"
+                            className="rounded-full w-10 h-10"
+                            onClick={() => setIsOpen(true)}
+                        >
+                            <Menu className="w-4 h-4" />
+                        </Button>
+                    </div>
                 </div>
             </div>
-        </header>
+
+            {/* Mobile Menu Overlay */}
+            <div
+                ref={menuRef}
+                className="fixed inset-0 z-[60] bg-background md:hidden transform translate-x-full"
+            >
+                <div className="flex flex-col h-full p-8">
+                    <div className="flex justify-end mb-12">
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            className="rounded-full w-12 h-12 border-border/50"
+                            onClick={() => setIsOpen(false)}
+                        >
+                            <X className="w-6 h-6" />
+                        </Button>
+                    </div>
+
+                    <nav className="flex flex-col gap-6">
+                        {navItems.map((item) => (
+                            <Link
+                                key={item.name}
+                                href={item.href}
+                                onClick={() => setIsOpen(false)}
+                                className="mobile-link text-5xl font-bold font-heading text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                                {item.name}
+                            </Link>
+                        ))}
+                    </nav>
+
+                    <div className="mt-auto space-y-6">
+                        <div className="h-px w-full bg-border/50" />
+                        <div className="flex justify-between items-center">
+                            <span className="text-muted-foreground">Get in touch</span>
+                            <Link href="mailto:saim@mrwebsol.com" className="text-lg font-medium hover:underline">
+                                saim@mrwebsol.com
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
     );
 }
