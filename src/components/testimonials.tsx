@@ -37,21 +37,21 @@ export function Testimonials() {
 
   useGSAP(
     () => {
-        // Marquee Effect 1 (Left to Right)
-        gsap.to(sliderRef.current, {
-            xPercent: -50,
-            ease: "none",
-            duration: 20,
-            repeat: -1,
-        });
+      // Marquee Effect 1 (Left to Right)
+      gsap.to(sliderRef.current, {
+        xPercent: -50,
+        ease: "none",
+        duration: 20,
+        repeat: -1,
+      });
 
-         // Marquee Effect 2 (Right to Left)
-         gsap.to(sliderRef2.current, {
-            xPercent: 50,
-            ease: "none",
-            duration: 20,
-            repeat: -1,
-        });
+      // Marquee Effect 2 (Right to Left)
+      gsap.to(sliderRef2.current, {
+        xPercent: 50,
+        ease: "none",
+        duration: 20,
+        repeat: -1,
+      });
     },
     { scope: containerRef }
   );
@@ -59,12 +59,18 @@ export function Testimonials() {
   return (
     <section
       ref={containerRef}
-      className="w-full py-32 overflow-hidden bg-background"
+      className="w-full py-32 overflow-hidden bg-background relative z-10"
     >
       <div className="container px-4 md:px-6 mb-16 text-center">
-        <h2 className="text-5xl md:text-7xl font-heading font-bold tracking-tighter">
-          Client Stories
+        <span className="text-sm font-mono uppercase tracking-widest text-primary mb-2 block">
+          Testimonials
+        </span>
+        <h2 className="text-5xl md:text-7xl font-heading font-bold tracking-tighter mb-6">
+          Client <span className="text-transparent bg-clip-text bg-gradient-to-b from-foreground via-foreground/80 to-primary/60">Stories</span>
         </h2>
+        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          Hear from those who have experienced the difference. Real results, real impact.
+        </p>
       </div>
 
       {/* First Row */}
@@ -80,7 +86,7 @@ export function Testimonials() {
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center font-bold text-primary">
-                    {item.author.charAt(0)}
+                  {item.author.charAt(0)}
                 </div>
                 <div>
                   <p className="font-bold text-sm">{item.author}</p>
@@ -93,7 +99,7 @@ export function Testimonials() {
       </div>
 
       {/* Second Row (Reverse) */}
-       <div className="flex w-[200%] -ml-[100%]" ref={sliderRef2}>
+      <div className="flex w-[200%] -ml-[100%]" ref={sliderRef2}>
         {[...testimonials, ...testimonials, ...testimonials].map((item, i) => (
           <div
             key={i}
@@ -104,8 +110,8 @@ export function Testimonials() {
                 &ldquo;{item.text}&rdquo;
               </p>
               <div className="flex items-center gap-3">
-                 <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center font-bold text-primary">
-                    {item.author.charAt(0)}
+                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center font-bold text-primary">
+                  {item.author.charAt(0)}
                 </div>
                 <div>
                   <p className="font-bold text-sm">{item.author}</p>

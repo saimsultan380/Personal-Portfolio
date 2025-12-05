@@ -42,17 +42,20 @@ export function Contact() {
       <div className="container mx-auto max-w-6xl relative z-10">
         <div className="mb-12">
           <div className="overflow-hidden">
+            <span className="contact-line text-sm font-mono uppercase tracking-widest text-primary mb-2 block">
+              Contact
+            </span>
             <p className="contact-line text-xl md:text-2xl font-mono text-muted-foreground mb-4">
               ( Have an idea? )
             </p>
           </div>
-          <div className="overflow-hidden">
+          <div className="overflow-hidden pb-2 pr-4">
             <h2 className="contact-line text-[12vw] leading-[0.85] font-heading font-bold tracking-tighter uppercase text-foreground">
               Let&apos;s Work
             </h2>
           </div>
-          <div className="overflow-hidden">
-            <h2 className="contact-line text-[12vw] leading-[0.85] font-heading font-bold tracking-tighter uppercase text-primary">
+          <div className="overflow-hidden pb-2 pr-4">
+            <h2 className="contact-line text-[12vw] leading-[0.85] font-heading font-bold tracking-tighter uppercase text-transparent bg-clip-text bg-gradient-to-b from-foreground via-foreground/80 to-primary/60">
               Together
             </h2>
           </div>

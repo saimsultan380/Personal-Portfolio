@@ -10,7 +10,7 @@ export function Footer() {
                         <div className="flex items-center gap-2">
                             <Code2 className="h-6 w-6 text-primary" />
                             <span className="text-xl font-bold font-heading">
-                                Saim <span className="text-primary">Sultan</span>
+                                Saim <span className="text-transparent bg-clip-text bg-gradient-to-b from-foreground via-foreground/80 to-primary/60">Sultan</span>
                             </span>
                         </div>
                         <p className="text-sm text-muted-foreground font-light">

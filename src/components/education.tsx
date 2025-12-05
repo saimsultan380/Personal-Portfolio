@@ -32,19 +32,19 @@ const certifications = [
     name: "AWS Certified Solutions Architect",
     issuer: "Amazon Web Services",
     year: "2023",
-    color: "from-orange-500 to-yellow-500",
+    color: "from-primary to-primary/60",
   },
   {
     name: "Google Cloud Professional",
     issuer: "Google",
     year: "2023",
-    color: "from-blue-500 to-cyan-500",
+    color: "from-primary to-primary/60",
   },
   {
     name: "Meta Front-End Developer",
     issuer: "Meta",
     year: "2022",
-    color: "from-blue-600 to-indigo-600",
+    color: "from-primary to-primary/60",
   },
 ];
 
@@ -112,7 +112,7 @@ export function Education() {
             Academic Journey
           </span>
           <h2 className="text-4xl md:text-6xl font-heading font-bold mb-6">
-            Education & <br /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-500">Certifications</span>
+            Education & <br /> <span className="text-transparent bg-clip-text bg-gradient-to-b from-foreground via-foreground/80 to-primary/60">Certifications</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
             My academic foundation and continuous pursuit of technical excellence.

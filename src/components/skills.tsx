@@ -113,7 +113,7 @@ function MarqueeRow({ items, reverse = false, speed = 20 }: { items: typeof tech
                                                         initial={{ width: 0 }}
                                                         animate={{ width: `${item.level}%` }}
                                                         transition={{ duration: 0.5, delay: 0.1 }}
-                                                        className="h-full bg-gradient-to-r from-primary to-purple-500"
+                                                        className="h-full bg-gradient-to-r from-primary to-primary/60"
                                                     />
                                                 </div>
                                             </div>
@@ -196,7 +196,7 @@ export function Skills() {
                         Technologies
                     </span>
                     <h2 className="text-5xl md:text-7xl font-bold font-heading mb-6 tracking-tighter">
-                        Tech <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-500 to-cyan-500">Stack</span>
+                        Tech <span className="text-transparent bg-clip-text bg-gradient-to-b from-foreground via-foreground/80 to-primary/60">Stack</span>
                     </h2>
                     <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
                         Hover over the technologies to reveal detailed stats.

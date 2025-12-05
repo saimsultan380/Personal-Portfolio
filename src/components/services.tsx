@@ -31,12 +31,12 @@ const services = [
     description:
       "Custom, high-performance websites built with React, Next.js, and modern frameworks. Pixel-perfect, responsive, and blazing fast.",
     icon: Globe,
-    color: "from-blue-500 to-cyan-500",
+    color: "from-primary to-primary/60",
     features: ["React & Next.js", "Responsive Design", "Lightning Fast"],
     skillIcons: [
-      { icon: Code2, label: "React", color: "text-blue-400" },
-      { icon: Zap, label: "Next.js", color: "text-cyan-400" },
-      { icon: Palette, label: "Tailwind", color: "text-sky-400" },
+      { icon: Code2, label: "React", color: "text-primary" },
+      { icon: Zap, label: "Next.js", color: "text-primary" },
+      { icon: Palette, label: "Tailwind", color: "text-primary" },
     ],
   },
   {
@@ -44,12 +44,12 @@ const services = [
     description:
       "Custom WordPress themes, plugins, and headless CMS solutions. Scalable, secure, and easy to manage for any business.",
     icon: FileCode,
-    color: "from-indigo-500 to-purple-500",
+    color: "from-primary to-primary/60",
     features: ["Custom Themes", "Plugin Development", "Headless CMS"],
     skillIcons: [
-      { icon: FileCode, label: "WordPress", color: "text-indigo-400" },
-      { icon: Database, label: "MySQL", color: "text-purple-400" },
-      { icon: Code2, label: "PHP", color: "text-violet-400" },
+      { icon: FileCode, label: "WordPress", color: "text-primary" },
+      { icon: Database, label: "MySQL", color: "text-primary" },
+      { icon: Code2, label: "PHP", color: "text-primary" },
     ],
   },
   {
@@ -57,12 +57,12 @@ const services = [
     description:
       "High-converting Shopify stores with custom themes and integrations. Turn your visitors into loyal customers.",
     icon: ShoppingCart,
-    color: "from-emerald-500 to-teal-500",
+    color: "from-primary to-primary/60",
     features: ["Custom Themes", "App Integration", "Conversion Focused"],
     skillIcons: [
-      { icon: ShoppingCart, label: "Shopify", color: "text-emerald-400" },
-      { icon: Package, label: "Liquid", color: "text-teal-400" },
-      { icon: Smartphone, label: "Mobile", color: "text-green-400" },
+      { icon: ShoppingCart, label: "Shopify", color: "text-primary" },
+      { icon: Package, label: "Liquid", color: "text-primary" },
+      { icon: Smartphone, label: "Mobile", color: "text-primary" },
     ],
   },
   {
@@ -70,12 +70,12 @@ const services = [
     description:
       "Technical SEO optimization, Core Web Vitals tuning, and growth strategies. Rank higher, load faster, convert better.",
     icon: Search,
-    color: "from-orange-500 to-red-500",
+    color: "from-primary to-primary/60",
     features: ["Technical SEO", "Core Web Vitals", "Analytics Setup"],
     skillIcons: [
-      { icon: Search, label: "SEO", color: "text-orange-400" },
-      { icon: TrendingUp, label: "Analytics", color: "text-red-400" },
-      { icon: Zap, label: "Speed", color: "text-amber-400" },
+      { icon: Search, label: "SEO", color: "text-primary" },
+      { icon: TrendingUp, label: "Analytics", color: "text-primary" },
+      { icon: Zap, label: "Speed", color: "text-primary" },
     ],
   },
   {
@@ -83,12 +83,12 @@ const services = [
     description:
       "Bespoke software solutions tailored to your unique business needs. From MVPs to enterprise-grade applications.",
     icon: Code2,
-    color: "from-pink-500 to-rose-500",
+    color: "from-primary to-primary/60",
     features: ["Full-Stack Apps", "API Development", "Cloud Solutions"],
     skillIcons: [
-      { icon: Code2, label: "TypeScript", color: "text-pink-400" },
-      { icon: Database, label: "PostgreSQL", color: "text-rose-400" },
-      { icon: Globe, label: "APIs", color: "text-fuchsia-400" },
+      { icon: Code2, label: "TypeScript", color: "text-primary" },
+      { icon: Database, label: "PostgreSQL", color: "text-primary" },
+      { icon: Globe, label: "APIs", color: "text-primary" },
     ],
   },
   {
@@ -96,12 +96,12 @@ const services = [
     description:
       "Leveraging the power of Artificial Intelligence to automate workflows and build intelligent applications.",
     icon: Bot,
-    color: "from-violet-600 to-indigo-600",
+    color: "from-primary to-primary/60",
     features: ["LLM Integration", "Smart Automation", "AI Chatbots"],
     skillIcons: [
-      { icon: Bot, label: "AI Models", color: "text-violet-400" },
-      { icon: Cpu, label: "Processing", color: "text-indigo-400" },
-      { icon: Code2, label: "Python", color: "text-blue-400" },
+      { icon: Bot, label: "AI Models", color: "text-primary" },
+      { icon: Cpu, label: "Processing", color: "text-primary" },
+      { icon: Code2, label: "Python", color: "text-primary" },
     ],
   },
 ];
@@ -169,7 +169,7 @@ export function Services() {
             <Sparkles className="w-4 h-4 animate-pulse" />
             Services
           </span>
-          <h2 className="text-4xl md:text-6xl font-heading font-bold mb-6 tracking-tight bg-gradient-to-br from-foreground to-foreground/60 bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-6xl font-heading font-bold mb-6 tracking-tight bg-gradient-to-b from-foreground via-foreground/80 to-primary/60 bg-clip-text text-transparent">
             What I Bring to the Table
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">

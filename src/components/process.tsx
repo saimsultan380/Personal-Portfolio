@@ -14,28 +14,28 @@ const steps = [
     title: "Discovery",
     desc: "I dive deep into your business goals, audience, and competitors to build a solid strategy.",
     icon: Search,
-    color: "from-blue-500 to-cyan-500",
+    color: "from-primary to-primary/60",
   },
   {
     number: "02",
     title: "Design",
     desc: "Crafting wireframes and high-fidelity interactive prototypes that align with your brand.",
     icon: PenTool,
-    color: "from-purple-500 to-pink-500",
+    color: "from-primary to-primary/60",
   },
   {
     number: "03",
     title: "Development",
     desc: "Writing clean, scalable code using the latest tech stack (Next.js, React, Node).",
     icon: Code2,
-    color: "from-orange-500 to-red-500",
+    color: "from-primary to-primary/60",
   },
   {
     number: "04",
     title: "Launch",
     desc: "Testing, optimization, and deployment. Ensuring everything runs perfectly at scale.",
     icon: Rocket,
-    color: "from-green-500 to-emerald-500",
+    color: "from-primary to-primary/60",
   },
 ];
 

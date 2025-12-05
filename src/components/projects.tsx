@@ -20,7 +20,7 @@ const projects = [
     liveUrl: "https://thriveclix.com/",
     github: "https://github.com",
     image: "https://api.microlink.io/?url=https%3A%2F%2Fthriveclix.com%2F&screenshot=true&meta=false&embed=screenshot.url",
-    color: "bg-purple-500",
+    color: "bg-primary",
   },
   {
     title: "Mr Web Sol",
@@ -30,7 +30,7 @@ const projects = [
     liveUrl: "https://mrwebsol.com/",
     github: "https://github.com",
     image: "https://api.microlink.io/?url=https%3A%2F%2Fmrwebsol.com%2F&screenshot=true&meta=false&embed=screenshot.url",
-    color: "bg-blue-500",
+    color: "bg-primary",
   },
   {
     title: "Society FC",
@@ -40,7 +40,7 @@ const projects = [
     liveUrl: "https://societyfc.com/",
     github: "https://github.com",
     image: "https://api.microlink.io/?url=https%3A%2F%2Fsocietyfc.com%2F&screenshot=true&meta=false&embed=screenshot.url",
-    color: "bg-emerald-500",
+    color: "bg-primary",
   },
 ];
 
@@ -77,7 +77,7 @@ export function Projects() {
           <span className="text-sm font-mono uppercase tracking-widest">Portfolio</span>
         </div>
         <h2 className="text-5xl md:text-8xl font-heading font-bold tracking-tighter mb-6">
-          Selected <br /> Works
+          Selected <br /> <span className="text-transparent bg-clip-text bg-gradient-to-b from-foreground via-foreground/80 to-primary/60">Works</span>
         </h2>
         <p className="text-xl text-muted-foreground max-w-2xl">
           A collection of projects that define my approach to digital product design and engineering.
@@ -163,4 +163,3 @@ export function Projects() {
     </section>
   );
 }
-
