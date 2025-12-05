@@ -88,7 +88,7 @@ export function Hero() {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative h-screen w-full overflow-hidden bg-background flex items-center justify-center perspective-1000"
+      className="relative h-screen w-full overflow-hidden bg-background flex items-center justify-center perspective-1000 pt-32"
     >
       {/* Cyber Grid Background */}
       <div className="absolute inset-0 z-0">
