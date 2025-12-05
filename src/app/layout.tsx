@@ -30,53 +30,58 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || "https://saimsultan.com"
   ),
+
   title: {
-    default: "Saim Sultan | Web Developer in Lahore, Karachi, Islamabad & Multan",
-    template: "%s | Saim Sultan"
+    default: "Saim Sultan – Web Developer & Software Engineer in Pakistan",
+    template: "%s | Saim Sultan",
   },
+
   description:
-    "Top-rated Web Developer in Pakistan serving Layyah, Multan, Lahore, Islamabad, Rawalpindi, Faisalabad & Karachi. Expert in WordPress, Shopify, Next.js, and Social Media Marketing.",
+    "Professional Web Developer and Software Engineer in Pakistan, specializing in WordPress, Shopify, Next.js, SEO, and custom full-stack solutions. Trusted by businesses across Lahore, Karachi, Islamabad, Multan, Faisalabad, and all over Pakistan.",
+
   keywords: [
-    "Web Developer Layyah",
-    "WordPress Developer Multan",
-    "Shopify Expert Lahore",
-    "Web Development Islamabad",
-    "Frontend Developer Rawalpindi",
-    "Full Stack Developer Faisalabad",
-    "Social Media Marketing Karachi",
-    "Next.js Developer Pakistan",
+    "Web Developer Pakistan",
+    "WordPress Developer Pakistan",
+    "Shopify Expert Pakistan",
+    "Next.js Developer",
+    "Full-Stack Developer Pakistan",
+    "Freelance Web Developer",
     "Custom Website Development",
-    "Ecommerce Solutions Pakistan",
-    "Saim Sultan Portfolio",
-    "Freelance Web Developer Pakistan"
+    "SEO Services Pakistan",
+    "Ecommerce Developer Pakistan",
+    "Saim Sultan Portfolio"
   ],
+
   authors: [{ name: "Saim Sultan" }],
   creator: "Saim Sultan",
   publisher: "Saim Sultan",
+
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://saimsultan.com",
-    title: "Saim Sultan | Expert Web Developer in Pakistan",
+    title: "Saim Sultan – Expert Web Developer & Software Engineer in Pakistan",
     description:
-      "Professional Web Development & Digital Marketing services in Layyah, Multan, Lahore, Islamabad, and across Pakistan. Specializing in WordPress, Shopify, and Custom Code.",
+      "Hire a top-rated Web Developer & Software Engineer specializing in WordPress, Shopify, Next.js, and SEO. Serving clients across Pakistan including Lahore, Karachi, Islamabad, and beyond.",
     siteName: "Saim Sultan",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Saim Sultan - Web Developer Pakistan",
+        alt: "Saim Sultan – Web Developer Pakistan",
       },
     ],
   },
+
   twitter: {
     card: "summary_large_image",
-    title: "Saim Sultan | Web Developer & Digital Marketer",
+    title: "Saim Sultan – Web Developer & Software Engineer",
     description:
-      "Expert Web Developer serving all major cities in Pakistan. WordPress, Shopify, and Custom Solutions.",
+      "Full-stack web developer providing WordPress, Shopify, Next.js, SEO, and custom web solutions across Pakistan.",
     images: ["/og-image.jpg"],
   },
+
   robots: {
     index: true,
     follow: true,
@@ -88,10 +93,17 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+
   verification: {
     google: "your-google-verification-code",
   },
+
+  icons: {
+    icon: "/icon.svg",
+    apple: "/apple-icon.svg",
+  },
 };
+
 
 export default function RootLayout({
   children,
@@ -100,26 +112,41 @@ export default function RootLayout({
 }>) {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "ProfessionalService",
+    "@type": "Person",
     name: "Saim Sultan",
     url: "https://saimsultan.com",
     image: "https://saimsultan.com/profile.jpg",
-    priceRange: "$$",
+    jobTitle: "Web Developer & Software Engineer",
+    worksFor: {
+      "@type": "Organization",
+      name: "Mr Web Sol",
+      url: "https://mrwebsol.com",
+    },
     description:
-      "Expert Web Developer and Digital Marketer providing top-tier services in WordPress, Shopify, Next.js, and Social Media Marketing across Pakistan.",
+      "Professional Web Developer & Software Engineer specializing in WordPress, Shopify, Next.js, and SEO services across Pakistan.",
+    knowsAbout: [
+      "Web Development",
+      "WordPress",
+      "Shopify",
+      "Next.js",
+      "React",
+      "Full-Stack Development",
+      "SEO",
+      "UI/UX",
+      "Ecommerce Development"
+    ],
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Islamabad",
       addressCountry: "Pakistan",
     },
     areaServed: [
-      { "@type": "City", name: "Layyah" },
-      { "@type": "City", name: "Multan" },
-      { "@type": "City", name: "Lahore" },
-      { "@type": "City", name: "Islamabad" },
-      { "@type": "City", name: "Rawalpindi" },
-      { "@type": "City", name: "Faisalabad" },
-      { "@type": "City", name: "Karachi" }
+      "Pakistan",
+      "Lahore",
+      "Karachi",
+      "Islamabad",
+      "Multan",
+      "Rawalpindi",
+      "Faisalabad"
     ],
     email: "saim@mrwebsol.com",
     telephone: "+92-300-6031380",
@@ -128,26 +155,14 @@ export default function RootLayout({
       "https://linkedin.com/in/saim-sultan-wordpress-developer",
       "https://x.com/saimthewebguy"
     ],
-    knowsAbout: [
-      "WordPress Development",
-      "Shopify Development",
-      "Web Development",
-      "Social Media Marketing",
-      "SEO",
-      "Next.js",
-      "React",
-      "Full Stack Development"
-    ],
-    worksFor: {
-      "@type": "Organization",
-      name: "Mr Web Sol",
-      url: "https://mrwebsol.com",
-    },
   };
 
   return (
     <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <head>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/favicon.ico" sizes="32x32" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.svg" />
         <link rel="preconnect" href="https://api.microlink.io" />
         <link rel="dns-prefetch" href="https://api.microlink.io" />
         <script

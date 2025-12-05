@@ -1,18 +1,8 @@
 User-agent: *
-Allow: /
-
-# Sitemaps
-Sitemap: https://saimsultan.com/sitemap.xml
-
-# Disallow admin and API routes
+# Allow crawling everywhere except restricted folders
 Disallow: /api/
 Disallow: /_next/
 Disallow: /admin/
 
-# Allow all images and assets
-Allow: /*.jpg$
-Allow: /*.jpeg$
-Allow: /*.png$
-Allow: /*.webp$
-Allow: /*.svg$
-Allow: /*.pdf$
+# Sitemap
+Sitemap: https://saimsultan.com/sitemap.xml
