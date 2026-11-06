@@ -132,7 +132,7 @@ export function Education() {
                   }`}
               >
                 {/* Timeline Node */}
-                <div className="absolute left-0 md:left-1/2 w-10 h-10 rounded-full bg-background border-4 border-primary shadow-[0_0_20px_rgba(var(--primary),0.3)] z-10 md:-translate-x-1/2 flex items-center justify-center">
+                <div className="absolute left-0 md:left-1/2 w-10 h-10 rounded-full bg-background border-4 border-primary shadow-[0_0_20px_color-mix(in_oklch,var(--primary)_30%,transparent)] z-10 md:-translate-x-1/2 flex items-center justify-center">
                   <item.icon className="w-5 h-5 text-primary" />
                 </div>
 

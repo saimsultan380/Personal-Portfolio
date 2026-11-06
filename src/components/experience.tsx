@@ -132,7 +132,7 @@ export function Experience() {
                 <div className={cn(
                   "w-1 h-12 rounded-full transition-all duration-300",
                   activeId === exp.id
-                    ? "bg-gradient-to-b from-primary to-primary/60 shadow-[0_0_10px_rgba(var(--primary),0.5)]"
+                    ? "bg-gradient-to-b from-primary to-primary/60 shadow-[0_0_10px_color-mix(in_oklch,var(--primary)_50%,transparent)]"
                     : "bg-border/50 group-hover:bg-primary/30"
                 )} />
 

@@ -152,7 +152,7 @@ export function Services() {
       className="w-full py-24 md:py-32 px-4 md:px-6 bg-background relative overflow-hidden"
     >
       {/* Animated Background */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(var(--primary),0.05)_0%,transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,color-mix(in_oklch,var(--primary)_5%,transparent)_0%,transparent_50%)]" />
       <div className="absolute top-20 right-20 w-96 h-96 bg-primary/5 rounded-full blur-[120px] animate-pulse" />
       <div className="absolute bottom-20 left-20 w-96 h-96 bg-purple-500/5 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: "2s" }} />
 
