@@ -66,7 +66,7 @@ export function FloatingActions() {
           size="icon"
           className="fab-action h-12 w-12 rounded-full shadow-lg opacity-0 translate-y-4 bg-primary hover:bg-primary/90"
         >
-          <Link href="mailto:saim@mrwebsol.com" aria-label="Email">
+          <Link href="mailto:saimsultan380@gmail.com" aria-label="Email">
             <Mail className="h-5 w-5" />
           </Link>
         </Button>

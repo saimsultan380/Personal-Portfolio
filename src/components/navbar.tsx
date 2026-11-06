@@ -177,8 +177,8 @@ export function Navbar() {
                         <div className="h-px w-full bg-border/50" />
                         <div className="flex justify-between items-center">
                             <span className="text-muted-foreground">Get in touch</span>
-                            <Link href="mailto:saim@mrwebsol.com" className="text-lg font-medium hover:underline">
-                                saim@mrwebsol.com
+                            <Link href="mailto:saimsultan380@gmail.com" className="text-lg font-medium hover:underline">
+                                saimsultan380@gmail.com
                             </Link>
                         </div>
                     </div>

@@ -12,7 +12,7 @@ export function Contact() {
   const [copied, setCopied] = useState(false);
 
   const copyEmail = () => {
-    navigator.clipboard.writeText("saim@mrwebsol.com");
+    navigator.clipboard.writeText("saimsultan380@gmail.com");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -68,7 +68,7 @@ export function Contact() {
                 onClick={copyEmail}
                 className="group cursor-pointer inline-flex items-center gap-4 text-3xl md:text-5xl font-bold border-b border-border pb-4 hover:border-primary transition-colors text-foreground"
               >
-                <span>saim@mrwebsol.com</span>
+                <span>saimsultan380@gmail.com</span>
                 <div className="relative w-8 h-8">
                   {copied ? (
                     <Check className="w-8 h-8 text-green-500" />
@@ -91,7 +91,6 @@ export function Contact() {
             <div className="flex gap-4">
               {[
                 { name: "LinkedIn", url: "https://www.linkedin.com/in/saim-sultan-wordpress-developer/" },
-                { name: "GitHub", url: "https://github.com/saimsultan380" },
                 { name: "Twitter", url: "https://x.com/saimthewebguy" },
               ].map((social) => (
                 <Magnetic key={social.name}>

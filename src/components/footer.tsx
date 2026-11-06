@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Github, Linkedin, Twitter, Mail, Code2 } from "lucide-react";
+import { Twitter, Mail, Code2 } from "lucide-react";
 
 export function Footer() {
     return (
@@ -20,24 +20,6 @@ export function Footer() {
 
                     <div className="flex items-center gap-4">
                         <Link
-                            href="https://github.com/saimsultan380"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="w-10 h-10 flex items-center justify-center rounded-lg bg-muted/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-all"
-                        >
-                            <Github className="w-5 h-5" />
-                            <span className="sr-only">GitHub</span>
-                        </Link>
-                        <Link
-                            href="https://www.linkedin.com/in/saim-sultan-wordpress-developer/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="w-10 h-10 flex items-center justify-center rounded-lg bg-muted/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-all"
-                        >
-                            <Linkedin className="w-5 h-5" />
-                            <span className="sr-only">LinkedIn</span>
-                        </Link>
-                        <Link
                             href="https://x.com/saimthewebguy"
                             target="_blank"
                             rel="noopener noreferrer"
@@ -47,7 +29,7 @@ export function Footer() {
                             <span className="sr-only">Twitter</span>
                         </Link>
                         <Link
-                            href="mailto:saim@mrwebsol.com"
+                            href="mailto:saimsultan380@gmail.com"
                             className="w-10 h-10 flex items-center justify-center rounded-lg bg-muted/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-all"
                         >
                             <Mail className="w-5 h-5" />
@@ -56,7 +38,7 @@ export function Footer() {
                     </div>
 
                     <p className="text-sm text-muted-foreground font-light">
-                        © 2025 Saim Sultan. All rights reserved.
+                        © 2026 Saim Sultan. All rights reserved.
                     </p>
                 </div>
             </div>

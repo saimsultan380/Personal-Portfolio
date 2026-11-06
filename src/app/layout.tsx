@@ -148,10 +148,9 @@ export default function RootLayout({
       "Rawalpindi",
       "Faisalabad"
     ],
-    email: "saim@mrwebsol.com",
+    email: "saimsultan380@gmail.com",
     telephone: "+92-300-6031380",
     sameAs: [
-      "https://github.com/saimsultan380",
       "https://linkedin.com/in/saim-sultan-wordpress-developer",
       "https://x.com/saimthewebguy"
     ],
