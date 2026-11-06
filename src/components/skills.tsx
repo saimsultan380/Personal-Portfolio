@@ -5,9 +5,11 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion, AnimatePresence } from "framer-motion";
-import { Cpu, Sparkles, Zap } from "lucide-react";
+import { Sparkles, Zap } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const monochromeIcons = new Set(["Next.js", "Three.js", "Framer", "GitHub", "Vercel"]);
 
 const techRows = [
     // Row 1 - Frontend
@@ -17,7 +19,7 @@ const techRows = [
         { name: "TypeScript", level: 90, desc: "Type Safety", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
         { name: "Tailwind", level: 99, desc: "Utility First", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" },
         { name: "Three.js", level: 85, desc: "3D Experiences", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/threejs/threejs-original.svg" },
-        { name: "Framer", level: 92, desc: "Advanced Motion", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/framermotion/framermotion-original.svg" },
+        { name: "Framer", level: 92, desc: "Advanced Motion", icon: "/tech/framer.svg" },
     ],
     // Row 2 - Backend & Tools
     [
@@ -25,7 +27,7 @@ const techRows = [
         { name: "PostgreSQL", level: 88, desc: "Relational DB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
         { name: "GraphQL", level: 85, desc: "Efficient APIs", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/graphql/graphql-plain.svg" },
         { name: "Docker", level: 85, desc: "Containerization", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
-        { name: "AWS", level: 80, desc: "Cloud Infrastructure", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" },
+        { name: "AWS", level: 80, desc: "Cloud Infrastructure", icon: "/tech/aws.svg" },
         { name: "Redis", level: 82, desc: "Caching Strategy", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" },
     ],
     // Row 3 - Workflow & Others
@@ -34,119 +36,199 @@ const techRows = [
         { name: "GitHub", level: 95, desc: "Collaboration", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
         { name: "VS Code", level: 98, desc: "Editor of Choice", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" },
         { name: "Vercel", level: 95, desc: "Deployment", icon: "https://assets.vercel.com/image/upload/v1588805858/repositories/vercel/logo.png" },
-        { name: "Supabase", level: 90, desc: "Backend as a Service", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" },
+        { name: "Supabase", level: 90, desc: "Backend as a Service", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg" },
         { name: "MongoDB", level: 85, desc: "NoSQL Database", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
     ],
 ];
 
-function MarqueeRow({ items, reverse = false, speed = 20 }: { items: typeof techRows[0]; reverse?: boolean; speed?: number }) {
+function TechCard({
+    item,
+    isHovered,
+    onEnter,
+    onLeave,
+}: {
+    item: (typeof techRows)[0][number];
+    isHovered: boolean;
+    onEnter: () => void;
+    onLeave: () => void;
+}) {
+    return (
+        <div
+            className="relative group shrink-0"
+            onMouseEnter={onEnter}
+            onMouseLeave={onLeave}
+        >
+            <AnimatePresence>
+                {isHovered && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 10, scale: 0.8, rotateX: 20 }}
+                        animate={{ opacity: 1, y: -130, scale: 1, rotateX: 0 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.8 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                        className="absolute left-1/2 -translate-x-1/2 w-64 z-50 pointer-events-none"
+                    >
+                        <div className="bg-popover/95 backdrop-blur-xl border border-border rounded-2xl p-4 shadow-xl shadow-zinc-200/70 dark:shadow-[0_0_30px_rgba(59,130,246,0.25)] relative overflow-hidden">
+                            <div className="absolute inset-0 bg-gradient-to-b from-primary/10 to-transparent" />
+                            <div className="relative z-10">
+                                <div className="flex items-center justify-between mb-2">
+                                    <h4 className="font-bold text-lg text-foreground">{item.name}</h4>
+                                    <Sparkles className="w-4 h-4 text-primary animate-pulse" />
+                                </div>
+                                <p className="text-xs text-muted-foreground mb-3">{item.desc}</p>
+                                <div className="space-y-1">
+                                    <div className="flex justify-between text-[10px] uppercase tracking-wider text-primary">
+                                        <span>Proficiency</span>
+                                        <span>{item.level}%</span>
+                                    </div>
+                                    <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+                                        <motion.div
+                                            initial={{ width: 0 }}
+                                            animate={{ width: `${item.level}%` }}
+                                            transition={{ duration: 0.5, delay: 0.1 }}
+                                            className="h-full bg-gradient-to-r from-primary to-primary/60"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="absolute bottom-[-8px] left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-popover border-r border-b border-border rotate-45" />
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            <div
+                className={`
+          w-24 h-24 md:w-32 md:h-32 rounded-3xl bg-card/80 dark:bg-card/10 backdrop-blur-sm border border-border/70 dark:border-white/10
+          flex flex-col items-center justify-center gap-2 px-2
+          transition-all duration-500 cursor-pointer
+          hover:bg-primary/5 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10
+          ${isHovered ? "scale-110 -translate-y-2 border-primary/50 bg-primary/5" : "scale-100"}
+        `}
+            >
+                <div className="w-10 h-10 md:w-12 md:h-12 relative">
+                    <img
+                        src={item.icon}
+                        alt=""
+                        className={`w-full h-full object-contain ${monochromeIcons.has(item.name) ? "dark:invert" : ""}`}
+                        draggable={false}
+                    />
+                </div>
+                <span
+                    className={`text-[11px] md:text-sm font-medium truncate max-w-full transition-colors ${
+                        isHovered ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"
+                    }`}
+                >
+                    {item.name}
+                </span>
+            </div>
+        </div>
+    );
+}
+
+function MarqueeRow({
+    items,
+    reverse = false,
+    pixelsPerSecond = 45,
+}: {
+    items: (typeof techRows)[0];
+    reverse?: boolean;
+    pixelsPerSecond?: number;
+}) {
     const rowRef = useRef<HTMLDivElement>(null);
-    const innerRef = useRef<HTMLDivElement>(null);
+    const trackRef = useRef<HTMLDivElement>(null);
+    const setRef = useRef<HTMLDivElement>(null);
     const [isHovered, setIsHovered] = useState<string | null>(null);
 
-    useGSAP(() => {
-        const inner = innerRef.current;
-        if (!inner) return;
+    useGSAP(
+        () => {
+            const track = trackRef.current;
+            const set = setRef.current;
+            if (!track || !set) return;
 
-        const totalWidth = inner.scrollWidth / 2;
+            let tween: gsap.core.Tween | null = null;
 
-        // Initial set
-        gsap.set(inner, { x: reverse ? -totalWidth : 0 });
+            const start = () => {
+                const distance = set.offsetWidth;
+                if (!distance) return;
 
-        const tl = gsap.to(inner, {
-            x: reverse ? 0 : -totalWidth,
-            duration: speed,
-            ease: "none",
-            repeat: -1,
-        });
+                tween?.kill();
+                gsap.set(track, { x: reverse ? -distance : 0 });
+                tween = gsap.to(track, {
+                    x: reverse ? 0 : -distance,
+                    duration: distance / pixelsPerSecond,
+                    ease: "none",
+                    repeat: -1,
+                });
+            };
 
-        // Pause on hover
-        inner.addEventListener("mouseenter", () => tl.timeScale(0.2));
-        inner.addEventListener("mouseleave", () => tl.timeScale(1));
+            start();
 
-        return () => {
-            tl.kill();
-        };
-    }, { scope: rowRef });
+            const images = Array.from(track.querySelectorAll("img"));
+            const waitForImages = Promise.all(
+                images.map(
+                    (img) =>
+                        img.complete
+                            ? Promise.resolve()
+                            : new Promise<void>((resolve) => {
+                                  img.addEventListener("load", () => resolve(), { once: true });
+                                  img.addEventListener("error", () => resolve(), { once: true });
+                              })
+                )
+            );
 
-    const duplicatedItems = [...items, ...items, ...items]; // Triple for smoother loop
+            waitForImages.then(() => {
+                requestAnimationFrame(start);
+            });
+
+            const onResize = () => start();
+            window.addEventListener("resize", onResize);
+
+            const slow = () => tween?.timeScale(0.25);
+            const restore = () => tween?.timeScale(1);
+            track.addEventListener("mouseenter", slow);
+            track.addEventListener("mouseleave", restore);
+
+            return () => {
+                window.removeEventListener("resize", onResize);
+                track.removeEventListener("mouseenter", slow);
+                track.removeEventListener("mouseleave", restore);
+                tween?.kill();
+            };
+        },
+        { scope: rowRef, dependencies: [reverse, pixelsPerSecond, items] }
+    );
 
     return (
-        <div ref={rowRef} className="relative overflow-visible py-12 w-full">
-            <div
-                ref={innerRef}
-                className="flex gap-8 items-center w-max px-4"
-            >
-                {duplicatedItems.map((item, index) => (
-                    <div
-                        key={`${item.name}-${index}`}
-                        className="relative group perspective-1000"
-                        onMouseEnter={() => setIsHovered(`${item.name}-${index}`)}
-                        onMouseLeave={() => setIsHovered(null)}
-                    >
-                        <AnimatePresence>
-                            {isHovered === `${item.name}-${index}` && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: 10, scale: 0.8, rotateX: 20 }}
-                                    animate={{ opacity: 1, y: -130, scale: 1, rotateX: 0 }}
-                                    exit={{ opacity: 0, y: 10, scale: 0.8 }}
-                                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                                    className="absolute left-1/2 -translate-x-1/2 w-64 z-50 pointer-events-none"
-                                >
-                                    <div className="bg-white/90 dark:bg-black/80 backdrop-blur-xl border border-zinc-200 dark:border-primary/50 rounded-2xl p-4 shadow-xl dark:shadow-[0_0_30px_rgba(var(--primary),0.3)] relative overflow-hidden">
-                                        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent" />
-                                        <div className="relative z-10">
-                                            <div className="flex items-center justify-between mb-2">
-                                                <h4 className="font-bold text-lg text-zinc-900 dark:text-white">{item.name}</h4>
-                                                <Sparkles className="w-4 h-4 text-primary animate-pulse" />
-                                            </div>
-                                            <p className="text-xs text-muted-foreground mb-3">{item.desc}</p>
-
-                                            {/* Proficiency Bar */}
-                                            <div className="space-y-1">
-                                                <div className="flex justify-between text-[10px] uppercase tracking-wider text-primary/80">
-                                                    <span>Proficiency</span>
-                                                    <span>{item.level}%</span>
-                                                </div>
-                                                <div className="h-1.5 bg-zinc-200 dark:bg-white/10 rounded-full overflow-hidden">
-                                                    <motion.div
-                                                        initial={{ width: 0 }}
-                                                        animate={{ width: `${item.level}%` }}
-                                                        transition={{ duration: 0.5, delay: 0.1 }}
-                                                        className="h-full bg-gradient-to-r from-primary to-primary/60"
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* Connecting Line */}
-                                        <div className="absolute bottom-[-10px] left-1/2 -translate-x-1/2 w-4 h-4 bg-white/90 dark:bg-black/80 border-r border-b border-zinc-200 dark:border-primary/50 rotate-45" />
-                                    </div>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-
-                        {/* Main Card */}
-                        <div className={`
-              w-24 h-24 md:w-32 md:h-32 rounded-3xl bg-white dark:bg-card/10 backdrop-blur-sm border border-zinc-200 dark:border-white/5 
-              flex flex-col items-center justify-center gap-2 
-              transition-all duration-500 cursor-pointer
-              hover:bg-primary/5 dark:hover:bg-primary/10 hover:border-primary/50 hover:shadow-lg dark:hover:shadow-[0_0_30px_rgba(var(--primary),0.2)]
-              ${isHovered === `${item.name}-${index}` ? 'scale-110 -translate-y-2' : 'scale-100 grayscale hover:grayscale-0'}
-            `}>
-                            <div className="w-10 h-10 md:w-12 md:h-12 relative">
-                                <img
-                                    src={item.icon}
-                                    alt={item.name}
-                                    className="w-full h-full object-contain drop-shadow-lg"
-                                />
-                            </div>
-                            <span className="text-xs md:text-sm font-medium text-muted-foreground group-hover:text-white transition-colors">
-                                {item.name}
-                            </span>
-                        </div>
-                    </div>
-                ))}
+        <div ref={rowRef} className="relative overflow-x-clip overflow-y-visible py-12 w-full">
+            <div ref={trackRef} className="flex w-max will-change-transform">
+                <div ref={setRef} className="flex items-center gap-8 pr-8">
+                    {items.map((item, index) => {
+                        const cardKey = `${item.name}-a-${index}`;
+                        return (
+                            <TechCard
+                                key={cardKey}
+                                item={item}
+                                isHovered={isHovered === cardKey}
+                                onEnter={() => setIsHovered(cardKey)}
+                                onLeave={() => setIsHovered(null)}
+                            />
+                        );
+                    })}
+                </div>
+                <div className="flex items-center gap-8 pr-8" aria-hidden="true">
+                    {items.map((item, index) => {
+                        const cardKey = `${item.name}-b-${index}`;
+                        return (
+                            <TechCard
+                                key={cardKey}
+                                item={item}
+                                isHovered={isHovered === cardKey}
+                                onEnter={() => setIsHovered(cardKey)}
+                                onLeave={() => setIsHovered(null)}
+                            />
+                        );
+                    })}
+                </div>
             </div>
         </div>
     );
@@ -174,23 +256,10 @@ export function Skills() {
             id="skills"
             className="relative w-full py-24 md:py-32 overflow-hidden bg-background"
         >
-            {/* Background Elements */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(var(--primary),0.05)_0%,transparent_70%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.06)_0%,transparent_70%)]" />
 
-            {/* Subtle Grid Pattern */}
-            <div
-                className="absolute inset-0 opacity-20"
-                style={{
-                    backgroundImage: `
-                        linear-gradient(rgba(99, 102, 241, 0.02) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(99, 102, 241, 0.02) 1px, transparent 1px)
-                    `,
-                    backgroundSize: '80px 80px'
-                }}
-            />
-
-            <div className="max-w-7xl mx-auto relative z-10">
-                <div className="skill-header text-center mb-10 px-4">
+            <div className="max-w-7xl mx-auto relative z-10 px-4">
+                <div className="skill-header text-center mb-10">
                     <span className="text-primary font-mono tracking-widest uppercase text-sm flex items-center justify-center gap-2 mb-4">
                         <Zap className="w-4 h-4 animate-pulse" />
                         Technologies
@@ -202,21 +271,12 @@ export function Skills() {
                         Hover over the technologies to reveal detailed stats.
                     </p>
                 </div>
+            </div>
 
-                {/* Marquee Container with Gradient Masks */}
-                <div className="relative">
-                    {/* Left Gradient Fade */}
-                    <div className="absolute left-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-r from-background via-background/80 to-transparent z-20 pointer-events-none" />
-
-                    {/* Right Gradient Fade */}
-                    <div className="absolute right-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-l from-background via-background/80 to-transparent z-20 pointer-events-none" />
-
-                    <div className="flex flex-col gap-4">
-                        <MarqueeRow items={techRows[0]} speed={40} />
-                        <MarqueeRow items={techRows[1]} reverse speed={40} />
-                        <MarqueeRow items={techRows[2]} speed={40} />
-                    </div>
-                </div>
+            <div className="relative z-10 flex flex-col gap-4">
+                <MarqueeRow items={techRows[0]} pixelsPerSecond={42} />
+                <MarqueeRow items={techRows[1]} reverse pixelsPerSecond={38} />
+                <MarqueeRow items={techRows[2]} pixelsPerSecond={40} />
             </div>
         </section>
     );

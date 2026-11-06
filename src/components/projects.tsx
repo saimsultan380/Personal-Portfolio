@@ -1,15 +1,10 @@
 "use client";
 
-import { useRef } from "react";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+import { motion } from "framer-motion";
 
 const projects = [
   {
@@ -79,28 +74,8 @@ const projects = [
 ];
 
 export function Projects() {
-  const containerRef = useRef<HTMLElement>(null);
-
-  useGSAP(
-    () => {
-      gsap.from(".project-card", {
-        y: 60,
-        opacity: 0,
-        duration: 0.7,
-        stagger: 0.08,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: ".projects-grid",
-          start: "top 85%",
-        },
-      });
-    },
-    { scope: containerRef }
-  );
-
   return (
     <section
-      ref={containerRef}
       id="projects"
       className="w-full bg-background relative py-24 md:py-32"
     >
@@ -126,9 +101,13 @@ export function Projects() {
 
         <div className="projects-grid grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
           {projects.map((project, index) => (
-            <article
+            <motion.article
               key={project.liveUrl}
-              className="project-card group flex flex-col rounded-t-lg rounded-b-[2rem] overflow-hidden bg-white/80 dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/10 backdrop-blur-xl shadow-xl shadow-zinc-200/40 dark:shadow-black/20 hover:-translate-y-1 hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.5, delay: index * 0.05 }}
+              className="group flex flex-col rounded-t-lg rounded-b-[2rem] overflow-hidden bg-white/80 dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/10 backdrop-blur-xl shadow-xl shadow-zinc-200/40 dark:shadow-black/20 hover:-translate-y-1 hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500"
             >
               <Link
                 href={project.liveUrl}
@@ -178,7 +157,7 @@ export function Projects() {
                   <ArrowUpRight className="w-4 h-4" />
                 </Link>
               </div>
-            </article>
+            </motion.article>
           ))}
         </div>
       </div>
