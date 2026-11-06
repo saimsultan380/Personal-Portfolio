@@ -1,35 +1,29 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-    siteUrl: process.env.SITE_URL || 'https://saimsultan.com',
+  siteUrl: "https://saim.mrwebsol.com",
+  trailingSlash: true,
+  generateRobotsTxt: false,
+  generateIndexSitemap: false,
+  exclude: ["/api/*", "/_next/*"],
+  changefreq: "weekly",
+  priority: 0.7,
+  sitemapSize: 5000,
+  transform: async (config, path) => {
+    let priority = config.priority;
+    let changefreq = config.changefreq;
 
-    // You already created a manual robots.txt — so keep this FALSE
-    generateRobotsTxt: false,
+    if (path === "/") {
+      priority = 1.0;
+      changefreq = "weekly";
+    }
 
-    // No need for index sitemap — keeps things simpler
-    generateIndexSitemap: false,
+    const loc = path === "/" ? `${config.siteUrl}/` : `${config.siteUrl}${path.endsWith("/") ? path : `${path}/`}`;
 
-    // Exclude internal routes (correct)
-    exclude: ['/api/*', '/_next/*', '/admin/*'],
-
-    changefreq: 'weekly',
-    priority: 0.7,
-    sitemapSize: 5000,
-
-    transform: async (config, path) => {
-        let priority = config.priority;
-        let changefreq = config.changefreq;
-
-        // Homepage boost (SEO best practice)
-        if (path === '/') {
-            priority = 1.0;
-            changefreq = 'daily';
-        }
-
-        return {
-            loc: path,
-            changefreq,
-            priority,
-            lastmod: new Date().toISOString(),
-        };
-    },
+    return {
+      loc,
+      changefreq,
+      priority,
+      lastmod: new Date().toISOString(),
+    };
+  },
 };

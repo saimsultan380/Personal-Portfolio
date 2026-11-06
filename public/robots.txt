@@ -1,8 +1,0 @@
-User-agent: *
-# Allow crawling everywhere except restricted folders
-Disallow: /api/
-Disallow: /_next/
-Disallow: /admin/
-
-# Sitemap
-Sitemap: https://saimsultan.com/sitemap.xml

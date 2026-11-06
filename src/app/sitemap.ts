@@ -1,14 +1,18 @@
-import { MetadataRoute } from 'next';
+import type { MetadataRoute } from "next";
+import fs from "node:fs";
+import path from "node:path";
+import { canonicalUrl } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://saimsultan.com';
+  const pageFile = path.join(process.cwd(), "src", "app", "page.tsx");
+  const lastModified = fs.statSync(pageFile).mtime;
 
-    return [
-        {
-            url: baseUrl,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 1.0,
-        }
-    ];
+  return [
+    {
+      url: canonicalUrl("/"),
+      lastModified,
+      changeFrequency: "weekly",
+      priority: 1,
+    },
+  ];
 }

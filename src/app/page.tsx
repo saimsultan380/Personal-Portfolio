@@ -1,6 +1,41 @@
-import dynamic from 'next/dynamic';
+import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { Hero } from "@/components/hero";
 import { About } from "@/components/about";
+import { canonicalUrl, homeJsonLd } from "@/lib/site";
+
+const canonical = canonicalUrl("/");
+const title = "Saim Sultan – Web Developer & Software Engineer in Pakistan";
+const description =
+  "Professional Web Developer and Software Engineer in Pakistan, specializing in WordPress, Shopify, Next.js, SEO, and custom full-stack solutions. Trusted by businesses across Lahore, Karachi, Islamabad, Multan, Faisalabad, and all over Pakistan.";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    alternates: {
+      canonical,
+    },
+    openGraph: {
+      type: "website",
+      locale: "en_US",
+      url: canonical,
+      siteName: "Saim Sultan",
+      title,
+      description,
+      images: [
+        {
+          url: "/saim-hero.png",
+          alt: "Saim Sultan, web developer in Pakistan",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ["/saim-hero.png"],
+    },
+  };
+}
 
 // Lazy load below-fold components
 const Services = dynamic(() => import("@/components/services").then(mod => ({ default: mod.Services })), {
@@ -30,8 +65,14 @@ const Education = dynamic(() => import("@/components/education").then(mod => ({ 
 });
 
 export default function Home() {
+  const jsonLd = homeJsonLd();
+
   return (
     <div className="flex flex-col pb-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Hero />
       <About />
       <Services />

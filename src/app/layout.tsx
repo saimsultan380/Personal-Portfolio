@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Sora } from "next/font/google";
 import "./globals.css";
+import { isIndexableEnvironment, SITE_URL } from "@/lib/site";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -26,10 +27,10 @@ const sora = Sora({
   preload: true,
 });
 
+const indexable = isIndexableEnvironment();
+
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://saimsultan.com"
-  ),
+  metadataBase: new URL(SITE_URL),
 
   title: {
     default: "Saim Sultan – Web Developer & Software Engineer in Pakistan",
@@ -59,44 +60,40 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://saimsultan.com",
-    title: "Saim Sultan – Expert Web Developer & Software Engineer in Pakistan",
-    description:
-      "Hire a top-rated Web Developer & Software Engineer specializing in WordPress, Shopify, Next.js, and SEO. Serving clients across Pakistan including Lahore, Karachi, Islamabad, and beyond.",
     siteName: "Saim Sultan",
     images: [
       {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Saim Sultan – Web Developer Pakistan",
+        url: "/saim-hero.png",
+        alt: "Saim Sultan, web developer in Pakistan",
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "Saim Sultan – Web Developer & Software Engineer",
-    description:
-      "Full-stack web developer providing WordPress, Shopify, Next.js, SEO, and custom web solutions across Pakistan.",
-    images: ["/og-image.jpg"],
+    images: ["/saim-hero.png"],
   },
 
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-
-  verification: {
-    google: "your-google-verification-code",
-  },
+  robots: indexable
+    ? {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          "max-video-preview": -1,
+          "max-image-preview": "large",
+          "max-snippet": -1,
+        },
+      }
+    : {
+        index: false,
+        follow: false,
+        googleBot: {
+          index: false,
+          follow: false,
+        },
+      },
 
   icons: {
     icon: "/icon.svg",
@@ -110,64 +107,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: "Saim Sultan",
-    url: "https://saimsultan.com",
-    image: "https://saimsultan.com/profile.jpg",
-    jobTitle: "Web Developer & Software Engineer",
-    worksFor: {
-      "@type": "Organization",
-      name: "Mr Web Sol",
-      url: "https://mrwebsol.com",
-    },
-    description:
-      "Professional Web Developer & Software Engineer specializing in WordPress, Shopify, Next.js, and SEO services across Pakistan.",
-    knowsAbout: [
-      "Web Development",
-      "WordPress",
-      "Shopify",
-      "Next.js",
-      "React",
-      "Full-Stack Development",
-      "SEO",
-      "UI/UX",
-      "Ecommerce Development"
-    ],
-    address: {
-      "@type": "PostalAddress",
-      addressCountry: "Pakistan",
-    },
-    areaServed: [
-      "Pakistan",
-      "Lahore",
-      "Karachi",
-      "Islamabad",
-      "Multan",
-      "Rawalpindi",
-      "Faisalabad"
-    ],
-    email: "saimsultan380@gmail.com",
-    telephone: "+92-300-6031380",
-    sameAs: [
-      "https://linkedin.com/in/saim-sultan-wordpress-developer",
-      "https://x.com/saimthewebguy"
-    ],
-  };
-
   return (
     <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <link rel="icon" href="/favicon.ico" sizes="32x32" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.svg" />
         <link rel="preconnect" href="https://api.microlink.io" />
         <link rel="dns-prefetch" href="https://api.microlink.io" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
       </head>
       <body
         className={`${inter.variable} ${sora.variable} font-sans antialiased`}
